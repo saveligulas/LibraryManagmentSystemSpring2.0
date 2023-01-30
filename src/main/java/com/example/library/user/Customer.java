@@ -1,11 +1,15 @@
 package com.example.library.user;
 
-import org.joda.time.LocalDate;
+import org.hibernate.annotations.Type;
+
+import java.time.LocalDate;
+
 
 public class Customer {
     private Long id;
     private String name;
     private String email;
+
     private LocalDate dob;
     private Integer age;
 
