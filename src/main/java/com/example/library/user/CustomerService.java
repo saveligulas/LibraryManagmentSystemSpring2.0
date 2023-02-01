@@ -11,8 +11,8 @@ public class CustomerService {
         return List.of(
                 new Customer(
                         1L,
-                        "Saveli",
-                        "saveli.gulas@gmail.com",
+                        "Test",
+                        "Test@gmail.com",
                         LocalDate.of(2004,11,18),
                         18
                 )
