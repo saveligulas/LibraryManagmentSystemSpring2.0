@@ -1,28 +1,23 @@
 package com.example.library.user;
 
-import org.hibernate.annotations.Type;
+import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table
+@Table(name = "Students")
 public class Customer {
     @Id
-    @SequenceGenerator(
-            name = "student_sequence",
-            sequenceName = "student_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "student_sequence"
-    )
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
+    @Column(name="CUSTOMER_NAME", length=50, nullable=false, unique=false)
     private String name;
+    @Column(name="CUSTOMER_EMAIL", length = 50, nullable = false,unique = false)
     private String email;
-
+    @Column(name="CUSTOMER_DOB", length = 15, nullable = false,unique = false)
     private LocalDate dob;
+    @Column(name="CUSTOMER_AGE", length = 5, nullable = false,unique = false)
     private Integer age;
 
     public Customer() {
