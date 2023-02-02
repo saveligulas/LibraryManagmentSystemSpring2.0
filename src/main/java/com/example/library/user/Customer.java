@@ -1,29 +1,31 @@
 package com.example.library.user;
 
+import com.example.library.book.Book;
 import jakarta.persistence.*;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @Entity
-@Table
 public class Customer {
     @Id
-    @SequenceGenerator(
-            name = "student_sequence",
-            sequenceName = "student_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "student_sequence"
-    )
+
     private Long id;
     private String name;
     private String email;
     private LocalDate dob;
     private Integer age;
+    private ArrayList<Book> books;
 
     public Customer() {
+    }
+
+    public Customer(String name, String email, LocalDate dob, ArrayList<Book> books) {
+        this.name = name;
+        this.email = email;
+        this.dob = dob;
+        this.books = books;
     }
 
     public Customer(String name, String email, LocalDate dob, Integer age) {
@@ -33,12 +35,13 @@ public class Customer {
         this.age = age;
     }
 
-    public Customer(Long id, String name, String email, LocalDate dob, Integer age) {
+    public Customer(Long id, String name, String email, LocalDate dob, Integer age, ArrayList<Book> books) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.dob = dob;
         this.age = age;
+        this.books = books;
     }
 
     public Long getId() {
@@ -79,6 +82,18 @@ public class Customer {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public ArrayList<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(ArrayList<Book> books) {
+        this.books = books;
+    }
+
+    public void addBook(Book book) {
+        books.add(book);
     }
 
     @Override
