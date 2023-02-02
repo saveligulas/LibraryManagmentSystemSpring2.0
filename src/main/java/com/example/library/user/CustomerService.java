@@ -10,7 +10,6 @@ public class CustomerService {
     public List<Customer> getCustomers() {
         return List.of(
                 new Customer(
-                        1L,
                         "Test",
                         "Test@gmail.com",
                         LocalDate.of(2004,11,18),
