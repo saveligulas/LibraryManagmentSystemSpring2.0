@@ -2,26 +2,29 @@ package com.example.library.user;
 
 import com.example.library.book.Book;
 import jakarta.persistence.*;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Customer {
     @Id
-
+    @GeneratedValue(
+            strategy = GenerationType.IDENTITY
+    )
     private Long id;
     private String name;
     private String email;
     private LocalDate dob;
     private Integer age;
-    private ArrayList<Book> books;
+    @OneToMany
+    private List<Book> books;
 
     public Customer() {
     }
 
-    public Customer(String name, String email, LocalDate dob, ArrayList<Book> books) {
+    public Customer(String name, String email, LocalDate dob, List<Book> books) {
         this.name = name;
         this.email = email;
         this.dob = dob;
@@ -84,11 +87,11 @@ public class Customer {
         this.age = age;
     }
 
-    public ArrayList<Book> getBooks() {
+    public List<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(ArrayList<Book> books) {
+    public void setBooks(List<Book> books) {
         this.books = books;
     }
 
