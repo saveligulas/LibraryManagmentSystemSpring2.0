@@ -1,15 +1,14 @@
 package com.example.library.user;
 
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "Students")
+@Table(name = "customers")
 public class Customer {
     @Id
- //   @GeneratedValue(strategy=GenerationType.AUTO)
+//   @GeneratedValue(strategy=GenerationType.AUTO)
     @SequenceGenerator(
             name = "student_sequence",
             sequenceName = "student_sequence",
@@ -28,6 +27,9 @@ public class Customer {
     private LocalDate dob;
 //    @Column(name="CUSTOMER_AGE", length = 5, nullable = false,unique = false)
     private Integer age;
+
+    public Customer() {
+    }
 
     public Customer(String name, String email, LocalDate dob, Integer age) {
         this.name = name;
