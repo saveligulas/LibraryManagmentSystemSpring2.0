@@ -5,10 +5,9 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "customers")
+@Table
 public class Customer {
     @Id
-//   @GeneratedValue(strategy=GenerationType.AUTO)
     @SequenceGenerator(
             name = "student_sequence",
             sequenceName = "student_sequence",
@@ -19,13 +18,9 @@ public class Customer {
             generator = "student_sequence"
     )
     private Long id;
-//    @Column(name="CUSTOMER_NAME", length=50, nullable=false, unique=false)
     private String name;
-//    @Column(name="CUSTOMER_EMAIL", length = 50, nullable = false,unique = false)
     private String email;
-//    @Column(name="CUSTOMER_DOB", length = 15, nullable = false,unique = false)
     private LocalDate dob;
-//    @Column(name="CUSTOMER_AGE", length = 5, nullable = false,unique = false)
     private Integer age;
 
     public Customer() {
