@@ -4,6 +4,7 @@ import com.example.library.book.Book;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class Customer {
     private String name;
     private String email;
     private LocalDate dob;
+    @Transient
     private Integer age;
     @OneToMany
     private List<Book> books;
@@ -31,19 +33,17 @@ public class Customer {
         this.books = books;
     }
 
-    public Customer(String name, String email, LocalDate dob, Integer age) {
+    public Customer(String name, String email, LocalDate dob) {
         this.name = name;
         this.email = email;
         this.dob = dob;
-        this.age = age;
     }
 
-    public Customer(Long id, String name, String email, LocalDate dob, Integer age, ArrayList<Book> books) {
+    public Customer(Long id, String name, String email, LocalDate dob, ArrayList<Book> books) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.dob = dob;
-        this.age = age;
         this.books = books;
     }
 
@@ -80,7 +80,7 @@ public class Customer {
     }
 
     public Integer getAge() {
-        return age;
+        return Period.between(this.dob,LocalDate.now()).getYears();
     }
 
     public void setAge(Integer age) {
