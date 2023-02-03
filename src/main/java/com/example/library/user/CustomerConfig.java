@@ -17,15 +17,13 @@ public class CustomerConfig {
             Customer saveli = new Customer(
                     "Saveli",
                     "saveli.gulas@gmail.com",
-                    LocalDate.of(2004,11,18),
-                    18
+                    LocalDate.of(2004,11,18)
             );
 
             Customer alex = new Customer(
                     "Alex",
                     "alex@dummy.com",
-                    LocalDate.of(2000, Month.DECEMBER,24),
-                    22
+                    LocalDate.of(2000, Month.DECEMBER,24)
             );
 
             customerRepository.saveAll(
