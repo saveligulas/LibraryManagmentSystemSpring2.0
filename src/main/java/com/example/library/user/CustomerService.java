@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -19,6 +20,11 @@ public class CustomerService {
     }
 
     public void addNewCustomer(Customer customer) {
-        System.out.println(customer.toString());
+        Optional<Customer> customerByEmail = customerRepository.findCustomerByEmail(customer.getEmail());
+        if(customerByEmail.isPresent()) {
+            throw new IllegalStateException("email taken");
+        } else {
+            customerRepository.save(customer);
+        }
     }
 }
