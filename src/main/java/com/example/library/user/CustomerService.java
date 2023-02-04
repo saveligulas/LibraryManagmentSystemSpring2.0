@@ -2,9 +2,11 @@ package com.example.library.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -26,5 +28,33 @@ public class CustomerService {
         } else {
             customerRepository.save(customer);
         }
+    }
+
+    public void deleteCustomer(Long customerId) {
+        boolean exists = customerRepository.existsById(customerId);
+        if(!exists) {
+            throw new IllegalStateException("customer with id "+ customerId + " does not exist");
+        }
+        customerRepository.deleteById(customerId);
+    }
+
+    @Transactional
+    public void updateCustomer(Long customerId, String name, String email) {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new IllegalStateException(
+                        "customer with id " + customerId + " does not exist"));
+
+        if(name != null &&
+                name.length() > 0 &&
+                !Objects.equals(customer.getName(), name)) {
+            Optional<Customer> customerOptional = customerRepository
+                    .findCustomerByName(name);
+            if(customerOptional.isPresent()) {
+                throw new IllegalStateException("name taken");
+            }
+            customer.setName(name);
+        }
+
+        if()
     }
 }
