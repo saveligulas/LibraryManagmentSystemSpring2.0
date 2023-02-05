@@ -55,6 +55,15 @@ public class CustomerService {
             customer.setName(name);
         }
 
-        if()
+        if (email != null &&
+                email.length() > 0 &&
+                !Objects.equals(customer.getEmail(), email)) {
+            Optional<Customer> customerOptional = customerRepository
+                    .findCustomerByEmail(email);
+            if(customerOptional.isPresent()) {
+                throw new IllegalStateException("email taken");
+            }
+            customer.setEmail(email);
+        }
     }
 }
