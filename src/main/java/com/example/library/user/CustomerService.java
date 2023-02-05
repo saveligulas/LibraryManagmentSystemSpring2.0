@@ -36,10 +36,12 @@ public class CustomerService {
             throw new IllegalStateException("customer with id "+ customerId + " does not exist");
         }
         customerRepository.deleteById(customerId);
+        customerRepository.flush();
     }
 
     public void deleteAllCustomers() {
         customerRepository.deleteAll();
+        customerRepository.flush();
     }
 
     @Transactional
