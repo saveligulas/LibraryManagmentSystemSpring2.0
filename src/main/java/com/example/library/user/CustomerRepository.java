@@ -12,7 +12,4 @@ public interface CustomerRepository extends JpaRepository<Customer,Long> {
 
     @Query("SELECT s FROM Customer s WHERE s.name = ?1")
     Optional<Customer> findCustomerByName(String name);
-
-    @Query("SELECT p.id FROM #CUSTOMER p")
-    List<Long> getAllIds();
 }
