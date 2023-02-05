@@ -3,6 +3,7 @@ package com.example.library.user;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CustomerRepository extends JpaRepository<Customer,Long> {
@@ -11,4 +12,7 @@ public interface CustomerRepository extends JpaRepository<Customer,Long> {
 
     @Query("SELECT s FROM Customer s WHERE s.name = ?1")
     Optional<Customer> findCustomerByName(String name);
+
+    @Query("SELECT p.id FROM #CUSTOMER p")
+    List<Long> getAllIds();
 }
