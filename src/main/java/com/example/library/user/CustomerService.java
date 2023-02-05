@@ -38,6 +38,10 @@ public class CustomerService {
         customerRepository.deleteById(customerId);
     }
 
+    public void deleteAllCustomers() {
+        customerRepository.deleteAll();
+    }
+
     @Transactional
     public void updateCustomer(Long customerId, String name, String email) {
         Customer customer = customerRepository.findById(customerId)
