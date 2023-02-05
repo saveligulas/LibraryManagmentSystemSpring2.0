@@ -9,10 +9,13 @@ import java.util.List;
 @RequestMapping(path = "api/v1/customer")
 public class CustomerController {
     private final CustomerService customerService;
+    private final CustomerRepository customerRepository;
 
     @Autowired
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(CustomerService customerService,
+                              CustomerRepository customerRepository) {
         this.customerService = customerService;
+        this.customerRepository = customerRepository;
     }
 
     @GetMapping
@@ -28,6 +31,11 @@ public class CustomerController {
     @DeleteMapping(path="{customerId}")
     public void deleteCustomer(@PathVariable("customerId") Long customerId) {
         customerService.deleteCustomer(customerId);
+    }
+
+    @DeleteMapping(path="0")
+    public void deleteAllCustomers() {
+        customerService.deleteAllCustomers();
     }
 
     @PutMapping(path = "{customerId}")
