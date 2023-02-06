@@ -25,9 +25,8 @@ public class CustomerService {
         Optional<Customer> customerByEmail = customerRepository.findCustomerByEmail(customer.getEmail());
         if(customerByEmail.isPresent()) {
             throw new IllegalStateException("email taken");
-        } else {
-            customerRepository.save(customer);
         }
+        customerRepository.save(customer);
     }
 
     public void deleteCustomer(Long customerId) {
