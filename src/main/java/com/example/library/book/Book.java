@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.time.LocalDate;
+
 @Entity
 public class Book {
     @Id
@@ -14,19 +16,46 @@ public class Book {
     private Long id;
     private String name;
     private String author;
+    private String publisher;
     private Integer year;
     private Boolean available;
+    private LocalDate dor;
 
     public Book() {
-
     }
 
-    public Book(Long id, String name, String author, Integer year, Boolean available) {
+    public Book(String name, String author,String publisher, Integer year) {
+        this.name = name;
+        this.author = author;
+        this.publisher = publisher;
+        this.year = year;
+    }
+
+    public Book(String name, String author,String publisher, Integer year, Boolean available) {
+        this.name = name;
+        this.author = author;
+        this.publisher = publisher;
+        this.year = year;
+        this.available = available;
+    }
+
+    public Book(Long id, String name, String author,String publisher, Integer year, Boolean available) {
         this.id = id;
         this.name = name;
         this.author = author;
+        this.publisher = publisher;
         this.year = year;
         this.available = available;
+    }
+
+    public Book(Long id, String name, String author,String publisher, Integer year, Boolean available, LocalDate dor) {
+        this.id = id;
+        this.name = name;
+        this.author = author;
+        this.publisher = publisher;
+        this.year = year;
+        this.available = available;
+        this.dor = dor;
     }
 
     public Long getId() {
@@ -53,6 +82,14 @@ public class Book {
         this.author = author;
     }
 
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
     public Integer getYear() {
         return year;
     }
@@ -69,6 +106,14 @@ public class Book {
         this.available = available;
     }
 
+    public LocalDate getDor() {
+        return dor;
+    }
+
+    public void setDor(LocalDate dor) {
+        this.dor = dor;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -77,6 +122,7 @@ public class Book {
                 ", author='" + author + '\'' +
                 ", year=" + year +
                 ", available=" + available +
+                ", dor=" + dor +
                 '}';
     }
 }
