@@ -1,5 +1,7 @@
 package com.example.library.user;
 
+import com.example.library.book.Book;
+import com.example.library.book.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,10 +14,13 @@ import java.util.Optional;
 @Service
 public class CustomerService {
     private final CustomerRepository customerRepository;
+    private final BookRepository bookRepository;
 
     @Autowired
-    public CustomerService(CustomerRepository customerRepository) {
+    public CustomerService(CustomerRepository customerRepository,
+                           BookRepository bookRepository) {
         this.customerRepository = customerRepository;
+        this.bookRepository = bookRepository;
     }
     public List<Customer> getCustomers() {
         return customerRepository.findAll();
@@ -44,7 +49,7 @@ public class CustomerService {
     }
 
     @Transactional
-    public void updateCustomer(Long customerId, String name, String email) {
+    public void updateCustomer(Long customerId, String name, String email, Long bookId) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new IllegalStateException(
                         "customer with id " + customerId + " does not exist"));
@@ -69,6 +74,16 @@ public class CustomerService {
                 throw new IllegalStateException("email taken");
             }
             customer.setEmail(email);
+        }
+
+        if(bookId != null &&
+                !customer.getBooks().contains(bookRepository.findOneNonOptional(bookId))) {
+            Optional<Book> bookOptional = bookRepository.
+                    findById(bookId);
+            if(bookOptional.isEmpty()) {
+                throw new IllegalStateException("book does not exist");
+            }
+            customer.setBooks(List.of(bookRepository.findOneNonOptional(bookId)));
         }
     }
 }
