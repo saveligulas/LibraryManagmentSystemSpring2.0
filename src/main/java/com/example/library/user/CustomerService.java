@@ -1,12 +1,11 @@
 package com.example.library.user;
 
-import com.example.library.book.Book;
-import com.example.library.book.BookRepository;
+import com.example.library.bookSorting.book.Book;
+import com.example.library.bookSorting.book.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
