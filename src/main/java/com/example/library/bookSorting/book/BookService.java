@@ -1,9 +1,12 @@
 package com.example.library.bookSorting.book;
 
+import com.example.library.bookSorting.author.Author;
+import com.example.library.bookSorting.genre.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -42,6 +45,19 @@ public class BookService {
         bookRepository.flush();
     }
 
-    public void updateBook(Long bookId) {
+    public void updateBook(Long bookId, String name,Long genreId, List<Long> genreIdList, Long authorId) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new IllegalStateException(
+                        "book with id " + bookId + " does not exist"));
+
+        if(name != null &&
+                name.length() > 0 &&
+                !Objects.equals(book.getName(), name))  {
+            Optional<Book> bookOptional = bookRepository.findBookByName(name);
+            if(bookOptional.isPresent()) {
+                throw new IllegalStateException("book with name:" + name + "already exists");
+            }
+            book.setName(name);
+        }
     }
 }
