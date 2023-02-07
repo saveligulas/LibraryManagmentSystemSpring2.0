@@ -1,6 +1,9 @@
 package com.example.library.bookSorting.genre;
 
+import com.example.library.bookSorting.book.Book;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "genre")
@@ -11,6 +14,13 @@ public class Genre {
     private Long id;
     private String name;
     private Integer size;
+    @ManyToMany
+    @JoinTable(
+            name="genre_books",
+            joinColumns = @JoinColumn(name = "GENRE_ID"),
+            inverseJoinColumns = @JoinColumn(name = "BOOK_ID")
+    )
+    private List<Book> books;
 
     public Genre() {
 
