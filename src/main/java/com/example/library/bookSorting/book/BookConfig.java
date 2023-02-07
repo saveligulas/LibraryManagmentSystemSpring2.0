@@ -1,11 +1,8 @@
-package com.example.library.book;
+package com.example.library.bookSorting.book;
 
-import com.example.library.user.CustomerRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.time.LocalDate;
 
 @Configuration
 public class BookConfig {

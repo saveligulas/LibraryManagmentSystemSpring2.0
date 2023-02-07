@@ -1,6 +1,5 @@
-package com.example.library.book;
+package com.example.library.bookSorting.book;
 
-import com.example.library.user.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +40,8 @@ public class BookService {
     public void deleteAllBooks() {
         bookRepository.deleteAll();
         bookRepository.flush();
+    }
+
+    public void updateBook(Long bookId) {
     }
 }
