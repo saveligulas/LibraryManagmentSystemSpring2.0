@@ -1,6 +1,6 @@
 package com.example.library.user;
 
-import com.example.library.book.Book;
+import com.example.library.bookSorting.book.Book;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
