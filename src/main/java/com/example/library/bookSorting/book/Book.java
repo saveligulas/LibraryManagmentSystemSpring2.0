@@ -1,16 +1,15 @@
 package com.example.library.bookSorting.book;
 
+import com.example.library.bookSorting.genre.Genre;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class Book {
@@ -28,6 +27,13 @@ public class Book {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate dor;
+    @ManyToMany
+    @JoinTable(
+            name="books_genres",
+            joinColumns = @JoinColumn(name = "BOOK_ID"),
+            inverseJoinColumns = @JoinColumn(name = "GENRE_ID")
+    )
+    private List<Genre> genres;
 
     public Book() {
     }
@@ -64,6 +70,17 @@ public class Book {
         this.year = year;
         this.available = available;
         this.dor = dor;
+    }
+
+    public Book(Long id, String name, String author, String publisher, Integer year, Boolean available, LocalDate dor, List<Genre> genres) {
+        this.id = id;
+        this.name = name;
+        this.author = author;
+        this.publisher = publisher;
+        this.year = year;
+        this.available = available;
+        this.dor = dor;
+        this.genres = genres;
     }
 
     public Long getId() {
@@ -120,6 +137,14 @@ public class Book {
 
     public void setDor(LocalDate dor) {
         this.dor = dor;
+    }
+
+    public List<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
     }
 
     @Override
