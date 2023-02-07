@@ -1,5 +1,7 @@
 package com.example.library.bookSorting.book;
 
+import com.example.library.bookSorting.author.Author;
+import com.example.library.bookSorting.genre.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,12 +46,13 @@ public class BookController {
         bookService.deleteAllBooks();
     }
 
-    @PutMapping(path = "{customerId}")
-    public void updateCustomer(
-            @PathVariable("customerId") Long customerId,
+    @PutMapping(path = "{bookId}")
+    public void updateBook(
+            @PathVariable("bookId") Long bookId,
             @RequestParam(required = false) String name,
-            @RequestParam(required = false) String email,
-            @RequestParam(required = false) Long bookId) {
-        bookService.updateBook(bookId);
+            @RequestParam(required = false) Long genreId,
+            @RequestParam(required = false) List<Long> genreIdList,
+            @RequestParam(required = false) Long authorId) {
+        bookService.updateBook(bookId,name,genreId,genreIdList,authorId);
     }
 }
