@@ -53,7 +53,7 @@ public class CustomerService {
                 .orElseThrow(() -> new IllegalStateException(
                         "customer with id " + customerId + " does not exist"));
 
-        if(name != null &&
+        if (name != null &&
                 name.length() > 0 &&
                 !Objects.equals(customer.getName(), name)) {
             Optional<Customer> customerOptional = customerRepository
@@ -75,7 +75,7 @@ public class CustomerService {
             customer.setEmail(email);
         }
 
-        if(bookId != null &&
+        if (bookId != null &&
                 !customer.getBooks().contains(bookRepository.findOneNonOptional(bookId))) {
             Optional<Book> bookOptional = bookRepository.
                     findById(bookId);
