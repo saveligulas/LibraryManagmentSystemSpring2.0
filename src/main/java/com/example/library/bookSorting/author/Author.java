@@ -13,7 +13,7 @@ public class Author {
     @Column(name = "id", nullable = false)
     private Long id;
     private String name;
-    @ManyToMany
+    @OneToMany
     @JoinTable(
             name="authors_books",
             joinColumns = @JoinColumn(name = "AUTHOR_ID"),
@@ -58,5 +58,9 @@ public class Author {
 
     public void setBooks(List<Book> books) {
         this.books = books;
+    }
+
+    public void deleteBook(Book book) {
+        this.books.remove(book);
     }
 }
