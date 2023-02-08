@@ -108,7 +108,7 @@ public class Customer {
     }
 
     public void deleteBook(Book book) {
-        books.remove(book);
+        this.books.remove(book);
     }
 
     @Override
