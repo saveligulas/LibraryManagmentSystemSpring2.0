@@ -66,4 +66,7 @@ public class Genre {
     }
 
 
+    public void deleteBook(Book book) {
+        this.books.remove(book);
+    }
 }
