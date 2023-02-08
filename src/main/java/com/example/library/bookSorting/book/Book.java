@@ -1,5 +1,6 @@
 package com.example.library.bookSorting.book;
 
+import com.example.library.bookSorting.author.Author;
 import com.example.library.bookSorting.genre.Genre;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -19,7 +20,7 @@ public class Book {
     )
     private Long id;
     private String name;
-    private String author;
+    private Author author;
     private String publisher;
     private Integer year;
     private Boolean available;
@@ -38,14 +39,14 @@ public class Book {
     public Book() {
     }
 
-    public Book(String name, String author,String publisher, Integer year) {
+    public Book(String name, Author author, String publisher, Integer year) {
         this.name = name;
         this.author = author;
         this.publisher = publisher;
         this.year = year;
     }
 
-    public Book(String name, String author,String publisher, Integer year, Boolean available) {
+    public Book(String name, Author author,String publisher, Integer year, Boolean available) {
         this.name = name;
         this.author = author;
         this.publisher = publisher;
@@ -53,7 +54,7 @@ public class Book {
         this.available = available;
     }
 
-    public Book(Long id, String name, String author,String publisher, Integer year, Boolean available) {
+    public Book(Long id, String name, Author author,String publisher, Integer year, Boolean available) {
         this.id = id;
         this.name = name;
         this.author = author;
@@ -62,7 +63,7 @@ public class Book {
         this.available = available;
     }
 
-    public Book(Long id, String name, String author,String publisher, Integer year, Boolean available, LocalDate dor) {
+    public Book(Long id, String name, Author author,String publisher, Integer year, Boolean available, LocalDate dor) {
         this.id = id;
         this.name = name;
         this.author = author;
@@ -72,7 +73,7 @@ public class Book {
         this.dor = dor;
     }
 
-    public Book(Long id, String name, String author, String publisher, Integer year, Boolean available, LocalDate dor, List<Genre> genres) {
+    public Book(Long id, String name, Author author, String publisher, Integer year, Boolean available, LocalDate dor, List<Genre> genres) {
         this.id = id;
         this.name = name;
         this.author = author;
@@ -99,11 +100,11 @@ public class Book {
         this.name = name;
     }
 
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 
