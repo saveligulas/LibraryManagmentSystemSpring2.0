@@ -3,6 +3,7 @@ package com.example.library.bookSorting.book;
 import com.example.library.bookSorting.author.Author;
 import com.example.library.bookSorting.author.AuthorRepository;
 import com.example.library.bookSorting.genre.Genre;
+import com.example.library.bookSorting.genre.GenreRepository;
 import com.example.library.user.Customer;
 import com.example.library.user.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +21,17 @@ public class BookService {
     private final BookRepository bookRepository;
     private final CustomerRepository customerRepository;
     private final AuthorRepository authorRepository;
+    private final GenreRepository genreRepository;
 
     @Autowired
     public BookService(BookRepository bookRepository,
                        CustomerRepository customerRepository,
-                       AuthorRepository authorRepository) {
+                       AuthorRepository authorRepository,
+                       GenreRepository genreRepository) {
         this.bookRepository = bookRepository;
         this.customerRepository = customerRepository;
         this.authorRepository = authorRepository;
+        this.genreRepository = genreRepository;
     }
 
     public List<Book> getBooks() {
@@ -58,8 +62,15 @@ public class BookService {
         if(authorOptional.isPresent()) {
             Author author = authorRepository.findByListContains(book)
                     .orElseThrow(() -> new IllegalStateException(
-                            "no author with book id " + bookId + " exist"));
+                            "no author with book id " + bookId + " exists"));
             author.deleteBook(book);
+        }
+        Optional<Genre> genreOptional = genreRepository.findByListContainsBook(book);
+        if(genreOptional.isPresent()) {
+            Genre genre = genreRepository.findByListContainsBook(book)
+                    .orElseThrow(() -> new IllegalStateException(
+                            "no genre with book id " + bookId + " exists"));
+            genre.deleteBook(book);
         }
         bookRepository.deleteById(bookId);
         bookRepository.flush();
