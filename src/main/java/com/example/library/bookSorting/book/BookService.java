@@ -2,10 +2,13 @@ package com.example.library.bookSorting.book;
 
 import com.example.library.bookSorting.author.Author;
 import com.example.library.bookSorting.genre.Genre;
+import com.example.library.user.Customer;
+import com.example.library.user.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -14,10 +17,13 @@ import java.util.Optional;
 public class BookService {
 
     private final BookRepository bookRepository;
+    private final CustomerRepository customerRepository;
 
     @Autowired
-    public BookService(BookRepository bookRepository) {
+    public BookService(BookRepository bookRepository,
+                       CustomerRepository customerRepository) {
         this.bookRepository = bookRepository;
+        this.customerRepository = customerRepository;
     }
 
     public List<Book> getBooks() {
@@ -32,10 +38,17 @@ public class BookService {
         bookRepository.save(book);
     }
 
+    @Transactional
     public void deleteBook(Long bookId) {
-        boolean exists = bookRepository.existsById(bookId);
-        if(!exists) {
-            throw new IllegalStateException("book with id "+ bookId + " does not exist");
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new IllegalStateException(
+                        "book with id " + bookId + " does not exist"));
+        Optional<Customer> customerOptional = customerRepository.findByListContainsBook(book);
+        if(customerOptional.isPresent()) {
+            Customer customer = customerRepository.findByListContainsBook(book)
+                    .orElseThrow(() -> new IllegalStateException(
+                            "no customer with book id " + bookId + " in his books exists"));
+            customer.deleteBook(book);
         }
         bookRepository.deleteById(bookId);
         bookRepository.flush();
