@@ -1,6 +1,7 @@
 package com.example.library.bookSorting.book;
 
 import com.example.library.bookSorting.author.Author;
+import com.example.library.bookSorting.author.AuthorRepository;
 import com.example.library.bookSorting.genre.Genre;
 import com.example.library.user.Customer;
 import com.example.library.user.CustomerRepository;
@@ -18,12 +19,15 @@ public class BookService {
 
     private final BookRepository bookRepository;
     private final CustomerRepository customerRepository;
+    private final AuthorRepository authorRepository;
 
     @Autowired
     public BookService(BookRepository bookRepository,
-                       CustomerRepository customerRepository) {
+                       CustomerRepository customerRepository,
+                       AuthorRepository authorRepository) {
         this.bookRepository = bookRepository;
         this.customerRepository = customerRepository;
+        this.authorRepository = authorRepository;
     }
 
     public List<Book> getBooks() {
@@ -49,6 +53,13 @@ public class BookService {
                     .orElseThrow(() -> new IllegalStateException(
                             "no customer with book id " + bookId + " in his books exists"));
             customer.deleteBook(book);
+        }
+        Optional<Author> authorOptional = authorRepository.findByListContains(book);
+        if(authorOptional.isPresent()) {
+            Author author = authorRepository.findByListContains(book)
+                    .orElseThrow(() -> new IllegalStateException(
+                            "no author with book id " + bookId + " exist"));
+            author.deleteBook(book);
         }
         bookRepository.deleteById(bookId);
         bookRepository.flush();
