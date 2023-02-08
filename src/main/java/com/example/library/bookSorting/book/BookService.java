@@ -4,6 +4,7 @@ import com.example.library.bookSorting.author.Author;
 import com.example.library.bookSorting.genre.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -45,6 +46,7 @@ public class BookService {
         bookRepository.flush();
     }
 
+    @Transactional
     public void updateBook(Long bookId, String name,Long genreId, List<Long> genreIdList, Long authorId) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new IllegalStateException(
