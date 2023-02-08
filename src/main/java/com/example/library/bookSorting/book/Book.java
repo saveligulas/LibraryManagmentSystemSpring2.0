@@ -20,6 +20,7 @@ public class Book {
     )
     private Long id;
     private String name;
+    @ManyToOne
     private Author author;
     private String publisher;
     private Integer year;
