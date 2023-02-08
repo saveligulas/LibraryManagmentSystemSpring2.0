@@ -13,7 +13,6 @@ public class Genre {
     @Column(name = "id", nullable = false)
     private Long id;
     private String name;
-    private Integer size;
     @ManyToMany
     @JoinTable(
             name="genre_books",
@@ -35,10 +34,10 @@ public class Genre {
         this.name = name;
     }
 
-    public Genre(Long id, String name, Integer size) {
+    public Genre(Long id, String name, List<Book> books) {
         this.id = id;
         this.name = name;
-        this.size = size;
+        this.books = books;
     }
 
     public Long getId() {
@@ -56,15 +55,6 @@ public class Genre {
     public void setName(String name) {
         this.name = name;
     }
-
-    public Integer getSize() {
-        return size;
-    }
-
-    public void setSize(Integer size) {
-        this.size = size;
-    }
-
 
     public void deleteBook(Book book) {
         this.books.remove(book);
