@@ -90,6 +90,9 @@ public class BookService {
                 genreId > 0 &&
                 genreService.getIdList().contains(genreId)) {
             Genre genre = genreService.getGenre(genreId);
+            if(book.getGenres().contains(genre)) {
+                throw new IllegalStateException("genre already exists in book");
+            }
             if(genre != null) {
                 book.addGenre(genre);
             }
@@ -108,6 +111,15 @@ public class BookService {
                     genreList.add(genreService.getGenre(id));
                 }
                 book.setGenres(genreList);
+            }
+        }
+
+        if(authorId != null &&
+                authorId > 0 &&
+                authorService.getAllIds().contains(authorId)) {
+            Author author = authorService.getAuthor(authorId);
+            if(author != null) {
+                book.setAuthor(author);
             }
         }
 
