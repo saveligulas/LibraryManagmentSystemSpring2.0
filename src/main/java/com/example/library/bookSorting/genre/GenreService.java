@@ -44,6 +44,10 @@ public class GenreService {
         genreRepository.deleteById(genreId);
     }
 
+    public List<Long> getIdList() {
+        return genreRepository.getAllIds();
+    }
+
     @Transactional
     public void deleteBook(Book book) {
         Optional<Genre> genreOptional = genreRepository.findByListContainsBook(book);
@@ -82,5 +86,10 @@ public class GenreService {
                 genre.addBook(book);
             }
         }
+    }
+
+    public Genre getGenre(Long genreId) {
+        return genreRepository.findById(genreId)
+                .orElseThrow(() -> new IllegalStateException("genre does not exist"));
     }
 }
