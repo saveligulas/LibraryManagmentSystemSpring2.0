@@ -33,11 +33,21 @@ public class AuthorService {
         return authorRepository.findAll();
     }
 
+    public List<Long> getAllIds() {
+        return authorRepository.getAllIds();
+    }
+
     public void addNewAuthor(Author author) {
         Optional<Author> authorOptional = authorRepository.findAuthorByName(author.getName());
         if(authorOptional.isPresent()) {
             throw new IllegalStateException("author with name " + author.getName() + "already exists");
         }
         authorRepository.save(author);
+    }
+
+    public Author getAuthor(Long authorId) {
+        return authorRepository.findById(authorId)
+                .orElseThrow(() -> new IllegalStateException("author does not exist"));
+
     }
 }
