@@ -157,15 +157,21 @@ public class Book {
         this.genres = genres;
     }
 
+    public void addGenre(Genre genre) {
+        this.genres.add(genre);
+    }
+
     @Override
     public String toString() {
         return "Book{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", author='" + author + '\'' +
+                ", author=" + author +
+                ", publisher='" + publisher + '\'' +
                 ", year=" + year +
                 ", available=" + available +
                 ", dor=" + dor +
+                ", genres=" + genres +
                 '}';
     }
 }
