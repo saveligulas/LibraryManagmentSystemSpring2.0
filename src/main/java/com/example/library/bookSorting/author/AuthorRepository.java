@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface AuthorRepository extends JpaRepository<Author, Long> {
 
-    @Query("SELECT a FROM Author a WHERE :book MEMBER OF e.books")
+    @Query("SELECT a FROM Author a WHERE :book MEMBER OF a.books")
     Optional<Author> findByListContains(@Param("book") Book book);
 }
