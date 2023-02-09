@@ -1,5 +1,6 @@
 package com.example.library.bookSorting.genre;
 
+import com.example.library.bookSorting.book.Book;
 import com.example.library.user.Customer;
 import com.example.library.user.CustomerRepository;
 import com.example.library.user.CustomerService;
@@ -38,7 +39,8 @@ public class GenreController {
     @PutMapping(path = "{genreId}")
     public void updateGenre(
             @PathVariable("genreId") Long genreId,
-            @RequestParam(required = false) String name) {
-        genreService.updateGenre(genreId,name);
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Book book) {
+        genreService.updateGenre(genreId,name,book);
     }
 }
