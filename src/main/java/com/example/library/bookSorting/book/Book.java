@@ -10,6 +10,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -163,6 +164,10 @@ public class Book {
 
     @Override
     public String toString() {
+        List<String> genreNames = new ArrayList<>();
+        for(Genre genre:genres) {
+            genreNames.add(genre.getName());
+        }
         return "Book{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
@@ -171,7 +176,7 @@ public class Book {
                 ", year=" + year +
                 ", available=" + available +
                 ", dor=" + dor +
-                ", genres=" + genres +
+                ", genres=" + genreNames +
                 '}';
     }
 }
