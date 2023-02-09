@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.text.html.Option;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -91,6 +92,22 @@ public class BookService {
             Genre genre = genreService.getGenre(genreId);
             if(genre != null) {
                 book.addGenre(genre);
+            }
+        }
+
+        if(genreIdList != null) {
+            boolean allGenresExist = true;
+            for(Long id:genreIdList) {
+                if(allGenresExist) {
+                    allGenresExist = genreService.getIdList().contains(genreId);
+                }
+            }
+            if(allGenresExist) {
+                List<Genre> genreList = new ArrayList<>();
+                for(Long id:genreIdList) {
+                    genreList.add(genreService.getGenre(id));
+                }
+                book.setGenres(genreList);
             }
         }
 
