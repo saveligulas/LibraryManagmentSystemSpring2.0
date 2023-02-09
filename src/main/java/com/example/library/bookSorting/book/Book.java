@@ -40,12 +40,19 @@ public class Book {
     public Book() {
     }
 
+    public Book(String name, String publisher, Integer year) {
+        this.name = name;
+        this.publisher = publisher;
+        this.year = year;
+        this.available = true;
+    }
+
     public Book(String name, Author author, String publisher, Integer year) {
         this.name = name;
         this.author = author;
         this.publisher = publisher;
         this.year = year;
-        this.available = false;
+        this.available = true;
     }
 
     public Book(String name, Author author,String publisher, Integer year, Boolean available) {
