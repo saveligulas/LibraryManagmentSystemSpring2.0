@@ -42,6 +42,16 @@ public class CustomerService {
         customerRepository.flush();
     }
 
+    public void deleteBook(Book book) {
+        Optional<Customer> customerOptional = customerRepository.findByListContainsBook(book);
+        if(customerOptional.isPresent()) {
+            Customer customer = customerRepository.findByListContainsBook(book)
+                    .orElseThrow(() -> new IllegalStateException(
+                            "no customer with book " + book.getName() + " exists"));
+            customer.deleteBook(book);
+        }
+    }
+
     public void deleteAllCustomers() {
         customerRepository.deleteAll();
         customerRepository.flush();
