@@ -45,6 +45,7 @@ public class Book {
         this.author = author;
         this.publisher = publisher;
         this.year = year;
+        this.available = false;
     }
 
     public Book(String name, Author author,String publisher, Integer year, Boolean available) {
