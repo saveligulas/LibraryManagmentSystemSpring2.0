@@ -52,7 +52,8 @@ public class BookController {
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Long genreId,
             @RequestParam(required = false) List<Long> genreIdList,
-            @RequestParam(required = false) Long authorId) {
-        bookService.updateBook(bookId,name,genreId,genreIdList,authorId);
+            @RequestParam(required = false) Long authorId,
+            @RequestParam(required = false) Boolean available) {
+        bookService.updateBook(bookId,name,genreId,genreIdList,authorId,available);
     }
 }
