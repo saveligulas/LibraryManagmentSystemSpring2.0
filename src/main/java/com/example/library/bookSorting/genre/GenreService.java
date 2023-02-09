@@ -1,5 +1,7 @@
 package com.example.library.bookSorting.genre;
 
+import com.example.library.bookSorting.book.Book;
+import com.example.library.bookSorting.book.BookRepository;
 import com.example.library.user.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +15,13 @@ import java.util.Optional;
 public class GenreService {
 
     private final GenreRepository genreRepository;
+    private final BookRepository bookRepository;
 
     @Autowired
-    public GenreService(GenreRepository genreRepository) {
+    public GenreService(GenreRepository genreRepository,
+                        BookRepository bookRepository) {
         this.genreRepository = genreRepository;
+        this.bookRepository = bookRepository;
     }
 
     public List<Genre> getGenres() {
@@ -40,7 +45,7 @@ public class GenreService {
     }
 
     @Transactional
-    public void updateGenre(Long genreId, String name) {
+    public void updateGenre(Long genreId, String name, Book book) {
         Genre genre = genreRepository.findById(genreId)
                 .orElseThrow(() -> new IllegalStateException(
                         "genre with id " + genreId + " does not exist"));
@@ -53,6 +58,18 @@ public class GenreService {
                 throw new IllegalStateException("name is already taken");
             }
             genre.setName(name);
+        }
+
+        if(book != null) {
+            Optional<Genre> genreOptional = genreRepository.findByListContainsBook(book);
+            boolean isEqual = genreOptional.equals(Optional.of(genre));
+            if(genreOptional.isPresent() &&
+                    isEqual) {
+                genre.deleteBook(book);
+            }
+            if(genreOptional.isEmpty()) {
+                genre.addBook(book);
+            }
         }
     }
 }
