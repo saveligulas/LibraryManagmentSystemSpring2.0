@@ -2,10 +2,13 @@ package com.example.library.bookSorting.book;
 
 import com.example.library.bookSorting.author.Author;
 import com.example.library.bookSorting.author.AuthorRepository;
+import com.example.library.bookSorting.author.AuthorService;
 import com.example.library.bookSorting.genre.Genre;
 import com.example.library.bookSorting.genre.GenreRepository;
+import com.example.library.bookSorting.genre.GenreService;
 import com.example.library.user.Customer;
 import com.example.library.user.CustomerRepository;
+import com.example.library.user.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,19 +22,19 @@ import java.util.Optional;
 public class BookService {
 
     private final BookRepository bookRepository;
-    private final CustomerRepository customerRepository;
-    private final AuthorRepository authorRepository;
-    private final GenreRepository genreRepository;
+    private final CustomerService customerService;
+    private final AuthorService authorService;
+    private final GenreService genreService;
 
     @Autowired
     public BookService(BookRepository bookRepository,
-                       CustomerRepository customerRepository,
-                       AuthorRepository authorRepository,
-                       GenreRepository genreRepository) {
+                       CustomerService customerService,
+                       AuthorService authorService,
+                       GenreService genreService) {
         this.bookRepository = bookRepository;
-        this.customerRepository = customerRepository;
-        this.authorRepository = authorRepository;
-        this.genreRepository = genreRepository;
+        this.customerService = customerService;
+        this.authorService = authorService;
+        this.genreService = genreService;
     }
 
     public List<Book> getBooks() {
@@ -46,32 +49,17 @@ public class BookService {
         bookRepository.save(book);
     }
 
-    @Transactional
     public void deleteBook(Long bookId) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new IllegalStateException(
                         "book with id " + bookId + " does not exist"));
-        Optional<Customer> customerOptional = customerRepository.findByListContainsBook(book);
-        if(customerOptional.isPresent()) {
-            Customer customer = customerRepository.findByListContainsBook(book)
-                    .orElseThrow(() -> new IllegalStateException(
-                            "no customer with book id " + bookId + " in his books exists"));
-            customer.deleteBook(book);
-        }
-        Optional<Author> authorOptional = authorRepository.findByListContains(book);
-        if(authorOptional.isPresent()) {
-            Author author = authorRepository.findByListContains(book)
-                    .orElseThrow(() -> new IllegalStateException(
-                            "no author with book id " + bookId + " exists"));
-            author.deleteBook(book);
-        }
-        Optional<Genre> genreOptional = genreRepository.findByListContainsBook(book);
-        if(genreOptional.isPresent()) {
-            Genre genre = genreRepository.findByListContainsBook(book)
-                    .orElseThrow(() -> new IllegalStateException(
-                            "no genre with book id " + bookId + " exists"));
-            genre.deleteBook(book);
-        }
+
+        customerService.deleteBook(book);
+
+        authorService.deleteBook(book);
+
+        genreService.deleteBook(book);
+
         bookRepository.deleteById(bookId);
         bookRepository.flush();
     }
