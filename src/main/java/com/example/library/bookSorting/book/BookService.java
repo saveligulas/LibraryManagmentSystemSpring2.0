@@ -70,7 +70,7 @@ public class BookService {
     }
 
     @Transactional
-    public void updateBook(Long bookId, String name,Long genreId, List<Long> genreIdList, Long authorId) {
+    public void updateBook(Long bookId, String name,Long genreId, List<Long> genreIdList, Long authorId, Boolean available) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new IllegalStateException(
                         "book with id " + bookId + " does not exist"));
@@ -83,6 +83,22 @@ public class BookService {
                 throw new IllegalStateException("book with name:" + name + "already exists");
             }
             book.setName(name);
+        }
+
+        if(genreId != null &&
+                genreId > 0 &&
+                genreService.getIdList().contains(genreId)) {
+            Genre genre = genreService.getGenre(genreId);
+            if(genre != null) {
+                book.addGenre(genre);
+            }
+        }
+
+        if(available != null) {
+            if(Objects.equals(book.getAvailable(), available)) {
+                throw new IllegalStateException("book available is already " + available);
+            }
+            book.setAvailable(available);
         }
     }
 }
