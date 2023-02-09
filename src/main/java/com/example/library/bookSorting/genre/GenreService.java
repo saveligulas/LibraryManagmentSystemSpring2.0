@@ -45,6 +45,17 @@ public class GenreService {
     }
 
     @Transactional
+    public void deleteBook(Book book) {
+        Optional<Genre> genreOptional = genreRepository.findByListContainsBook(book);
+        if(genreOptional.isPresent()) {
+            Genre genre = genreRepository.findByListContainsBook(book)
+                    .orElseThrow(() -> new IllegalStateException(
+                            "no genre with book " + book.getName() + " exists"));
+            genre.deleteBook(book);
+        }
+    }
+
+    @Transactional
     public void updateGenre(Long genreId, String name, Book book) {
         Genre genre = genreRepository.findById(genreId)
                 .orElseThrow(() -> new IllegalStateException(
