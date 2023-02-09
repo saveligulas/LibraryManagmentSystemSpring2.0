@@ -5,6 +5,7 @@ import com.example.library.bookSorting.genre.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,12 +24,16 @@ public class BookController {
     }
 
     @GetMapping
-    public List<Book> getBooks() {
+    public List<String> getBooks() {
         List<Book> optionalBookList = bookService.getBooks();
         if(optionalBookList.isEmpty()) {
             throw new IllegalStateException("no books located in the database");
         }
-        return bookService.getBooks();
+        ArrayList<String> bookStringList = new ArrayList<>();
+        for(Book book:bookService.getBooks()) {
+            bookStringList.add(book.toString());
+        }
+        return bookStringList;
     }
 
     @PostMapping
