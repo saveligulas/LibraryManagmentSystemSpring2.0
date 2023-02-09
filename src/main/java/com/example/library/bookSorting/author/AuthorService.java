@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,4 +29,15 @@ public class AuthorService {
         }
     }
 
+    public List<Author> getAuthors() {
+        return authorRepository.findAll();
+    }
+
+    public void addNewAuthor(Author author) {
+        Optional<Author> authorOptional = authorRepository.findAuthorByName(author.getName());
+        if(authorOptional.isPresent()) {
+            throw new IllegalStateException("author with name " + author.getName() + "already exists");
+        }
+        authorRepository.save(author);
+    }
 }
