@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface AuthorRepository extends JpaRepository<Author, Long> {
@@ -15,4 +16,7 @@ public interface AuthorRepository extends JpaRepository<Author, Long> {
 
     @Query("SELECT a FROM Author a WHERE :book MEMBER OF a.books")
     Optional<Author> findByListContains(@Param("book") Book book);
+
+    @Query("select a.id from Author a")
+    List<Long> getAllIds();
 }
