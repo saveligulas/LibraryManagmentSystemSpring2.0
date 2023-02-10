@@ -50,4 +50,9 @@ public class AuthorService {
                 .orElseThrow(() -> new IllegalStateException("author does not exist"));
 
     }
+
+    @Transactional
+    public void updateAuthor(Long AuthorId) {
+
+    }
 }
