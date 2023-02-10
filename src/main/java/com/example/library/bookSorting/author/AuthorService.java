@@ -56,7 +56,7 @@ public class AuthorService {
         Author author = authorRepository.findById(authorId)
                 .orElseThrow(() -> new IllegalStateException("author with id " + authorId + " does not exist"));
 
-        author.
+        author.addBook(book);
     }
 
     @Transactional
