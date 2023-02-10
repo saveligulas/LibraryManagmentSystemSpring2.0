@@ -119,7 +119,10 @@ public class BookService {
                 authorService.getAllIds().contains(authorId)) {
             Author author = authorService.getAuthor(authorId);
             if(author != null) {
+                Long currentAuthorId = book.getAuthor().getId();
+                authorService.deleteBook(book);
                 book.setAuthor(author);
+                authorService.addBookToAuthor(authorId, book);
             }
         }
 
