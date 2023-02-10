@@ -47,6 +47,9 @@ public class BookService {
         if(bookByName.isPresent()) {
             throw new IllegalStateException("book name taken");
         }
+        if(book.getAuthor() != null) {
+            authorService.addBookToAuthor(book.getAuthor().getId(),book);
+        }
         bookRepository.save(book);
     }
 
