@@ -52,7 +52,17 @@ public class AuthorService {
     }
 
     @Transactional
-    public void updateAuthor(Long AuthorId) {
+    public void addBookToAuthor(Long authorId, Book book) {
+        Author author = authorRepository.findById(authorId)
+                .orElseThrow(() -> new IllegalStateException("author with id " + authorId + " does not exist"));
+
+        author.
+    }
+
+    @Transactional
+    public void updateAuthor(Long authorId, Book book) {
+        Author author = authorRepository.findById(authorId)
+                .orElseThrow(() -> new IllegalStateException("author with id " + authorId + " does not exist"));
 
     }
 }
